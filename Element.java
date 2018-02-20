@@ -18,7 +18,6 @@ public class Element {
     public Element(Node node, int cost, Node [] path ){
 
 
-
     }
 
     private static class Node  implements Comparable<Node>{
