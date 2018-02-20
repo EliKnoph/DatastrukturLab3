@@ -3,9 +3,13 @@ import java.util.*;
 
 public class DirectedGraph<E extends Edge> {
 
-	public Element element = new Element(node);
 
-	private PriorityQueue <Element> q = new PriorityQueue<>();
+
+
+	private PriorityQueue <Element> q = new PriorityQueue<>(); //element innehåller, startnod, cost, och path(node)
+
+	int [] d; //shortest distance from s to v
+	int [] p;
 
 
 	public DirectedGraph(int noOfNodes) {
@@ -13,7 +17,7 @@ public class DirectedGraph<E extends Edge> {
 	}
 
 	public void addEdge(E e) {
-		;
+
 	}
 
 	public Iterator<E> shortestPath(int from, int to) {
@@ -23,6 +27,12 @@ public class DirectedGraph<E extends Edge> {
 	public Iterator<E> minimumSpanningTree() {
 		return null;
 	}
+
+	public void add(Element element){
+
+	}
+
+
 
 
 }

@@ -13,15 +13,11 @@ public class Element {
     private static final double infinity = 1.0E300;
 
 
-    private Node node;
-    private int cost;
-    private Node[] path;
 
-    public Element(){
 
-        this.node = node;
-        this.cost = cost;
-        this.path = path;
+    public Element(Node node, int cost, Node [] path ){
+
+
 
     }
 
