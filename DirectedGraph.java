@@ -3,32 +3,34 @@ import java.util.*;
 
 public class DirectedGraph<E extends Edge> {
 
+	List <E> [] edgeList; //en arraylist
+	int numberOfNodes;
 
-	private PriorityQueue <Element> q = new PriorityQueue<>(); //element innehåller, startnod, cost, och path(node)
 
-	int [] d; //shortest distance from s to v
-	int [] p;
+	public DirectedGraph(int numberOfNodes) {
 
-	public void addPriorityQueue(Element e){
+		edgeList = new List[numberOfNodes]; //int array som representerar varje nod i form av index
+		this.numberOfNodes = numberOfNodes;
 
-		q.add(e);
-
-	}
-
-	public DirectedGraph(int noOfNodes) {
+		for(int i = 0; i < numberOfNodes; i++){ //för varje nod (index) skapas en linked list där kanterna ska vara
+			edgeList[i] = new LinkedList<>();
+		}
 
 	}
 
 	public void addEdge(E e) {
 
+		if (e != null) {
 
+			edgeList[e.getSource()].add(e); //adderar edgen på från-noden
+		}
 
 	}
 
-	public Iterator<E> shortestPath(int from, int to){
-		
+	public Iterator<E> shortestPath(int startNode, int endNode){ //kant from och to, index i en array
 
-		return null;
+		CompDijkstraPath<E> comp = new CompDijkstraPath<>(startNode, endNode, 0, edgeList);
+		return comp.shortestPath(startNode, endNode);
 	}
 		
 	public Iterator<E> minimumSpanningTree() {

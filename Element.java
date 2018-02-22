@@ -15,7 +15,7 @@ public class Element {
 
 
 
-    public Element(Node node, int cost, Node [] path ){
+    public Element(int node, int cost, Node [] path ){
 
 
 
