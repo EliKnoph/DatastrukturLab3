@@ -9,7 +9,7 @@ public class DirectedGraph<E extends Edge> {
 
 	public DirectedGraph(int numberOfNodes) {
 
-		edgeList = new List[numberOfNodes]; //int array som representerar varje nod i form av index
+		edgeList = new List[numberOfNodes]; //en list-array som representerar varje nod i form av index
 		this.numberOfNodes = numberOfNodes;
 
 		for(int i = 0; i < numberOfNodes; i++){ //för varje nod (index) skapas en linked list där kanterna ska vara
@@ -30,6 +30,8 @@ public class DirectedGraph<E extends Edge> {
 	public Iterator<E> shortestPath(int startNode, int endNode){ //kant from och to, index i en array
 
 		CompDijkstraPath<E> comp = new CompDijkstraPath<>(startNode, endNode, 0, edgeList);
+
+
 		return comp.shortestPath(startNode, endNode);
 	}
 		
