@@ -8,7 +8,7 @@ public class DirectedGraph<E extends Edge> {
 	private int numberOfNodes;
 
 
-	private DirectedGraph(int numberOfNodes) {
+	public DirectedGraph(int numberOfNodes) {
 
 		edgeList = new List[numberOfNodes]; //en list-array som representerar varje nod i form av index
 		this.numberOfNodes = numberOfNodes;
@@ -31,32 +31,31 @@ public class DirectedGraph<E extends Edge> {
 	public Iterator<E> shortestPath(int startNode, int endNode){ //kant from och to, index i en array
 
 		CompDijkstraPath<E> comp = new CompDijkstraPath<>(startNode, endNode, 0, edgeList);
-		
+
 		return comp.shortestPath(startNode, endNode);
 	}
 		
 	public Iterator<E> minimumSpanningTree() {
-		List <E> [] cc = new List[numberOfNodes];
-		PriorityQueue<E> edges = new PriorityQueue<>(100,new CompKruskalEdge());
-		for(int i = 0; i < cc.length; i++){
+		List <E> [] cc = new List[numberOfNodes];   			//Skapar fältet cc
+		PriorityQueue<E> edges = new PriorityQueue<>(100,new CompKruskalEdge());		//Skapar en pq
+		for(int i = 0; i < cc.length; i++){						//Lägger in en tom lista på varje nod i cc
 			cc[i] = new ArrayList<>();
 		}
-		for(int i = 0; i < edgeList.length; i++){
+		for(int i = 0; i < edgeList.length; i++){				//Lägger in alla bågar i pq
 			edges.addAll(edgeList[i]);
 		}
-		while(!edges.isEmpty() && cc.length > 1){
-			System.out.println("Hej jag sitter fast");
-			E e = edges.poll();
-			if(cc[e.from] != cc[e.to]){
-				if(cc[e.from].size() > cc[e.to].size()){
+		while(!edges.isEmpty() && cc.length > 1){				//Så länge pq inte är tom och och cc > 1
+			E e = edges.poll();									//Hämtar e från kön
+			if(cc[e.from] != cc[e.to]){							//Om from och  to inte är samma lista
+				if(cc[e.from].size() > cc[e.to].size()){		//Flyttar alla element från kortare listan till den längre
 					for(int i = 0; i < cc[e.to].size(); i++){
-						E currentEdge = cc[e.to].get(i); //byt namn
+						E currentEdge = cc[e.to].get(i); 		//byt namn
 						cc[e.from].add(currentEdge);
 						cc[currentEdge.from] = cc[e.from];
 						cc[currentEdge.to] = cc[e.to];
 
 					}
-					cc[e.from] = cc[e.to];
+					cc[e.from] = cc[e.to];						//Lägger e i den påfyllda listan
 				}
 			else{
 				for(int i = 0; i < cc[e.from].size(); i++){
@@ -71,7 +70,6 @@ public class DirectedGraph<E extends Edge> {
 		}
 
 
-		System.out.println("Hej jag sitter inte fast");
 		return cc[0].iterator();
 	}
 
