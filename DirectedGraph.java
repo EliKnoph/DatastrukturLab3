@@ -57,10 +57,10 @@ public class DirectedGraph<E extends Edge> {
 					}
 					cc[e.from] = cc[e.to];						//Lägger e i den påfyllda listan
 				}
-			else{
+			else if(cc[e.to].size() > cc[e.from].size()){
 				for(int i = 0; i < cc[e.from].size(); i++){
 					E currentEdge = cc[e.from].get(i);
-					cc[e.from].add(currentEdge);
+					cc[e.to].add(currentEdge);				//Va from här innan, funkar likadant, fett weird
 					cc[currentEdge.to] = cc[e.to];
 					cc[currentEdge.from] = cc[e.from];
 				}
