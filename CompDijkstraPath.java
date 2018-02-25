@@ -10,11 +10,11 @@ public class CompDijkstraPath <E extends Edge>{
     int to;
     int cost;
     boolean [] visitedNodes;
-    List<E> edgeList;
+    List<E> [] edgeList;
 
 
 
-    public CompDijkstraPath(int from, int to, int cost, List<E> edgeList ){
+    public CompDijkstraPath(int from, int to, int cost, List<E> [] edgeList ){
         this.from = from;
         this.to = to;
         this.cost = cost;
@@ -26,7 +26,7 @@ public class CompDijkstraPath <E extends Edge>{
 
         boolean [] visitedNodes; //samlar alla besökta noder
 
-        visitedNodes = new boolean[edgeList.size()]; //sätter storleken på visitedNodes-arrayen, lika stor som antalet noder
+        visitedNodes = new boolean[edgeList.length]; //sätter storleken på visitedNodes-arrayen, lika stor som antalet noder
 
         PriorityQueue<dNode> priorityQueue = new PriorityQueue<>(); //definierar priokön som ska bestå av nodes
 
@@ -35,10 +35,11 @@ public class CompDijkstraPath <E extends Edge>{
 
         while(!priorityQueue.isEmpty()){
 
+            currentNode = priorityQueue.poll(); //sätter första noden
 
             if(!visitedNodes[currentNode.startNod]){ //om startnoden inte är besökt innan
 
-                currentNode = priorityQueue.poll(); //sätter första noden
+
 
                 if(currentNode.startNod == endNodeNumber){
                     return currentNode.path.iterator();
@@ -46,16 +47,32 @@ public class CompDijkstraPath <E extends Edge>{
 
                     visitedNodes[currentNode.startNod] = true; //EL == efterföljarlista, v == väg, kant, v ?= vikt
 
-                    for( dNode nodes = new dNode(); nodes.path.size() > 0;){
-                        if(!visitedNodes[nodes.startNod]){
-                            priorityQueue.add(nodes);
+                    for(E edge: this.edgeList[currentNode.startNod]){
+                        if(!visitedNodes[edge.to]){
+                            double totalDistance = currentNode.totalCost + edge.getWeight();
+                            List <E> newPath = new ArrayList<E>(currentNode.path);
+                            newPath.add(edge);
+                            priorityQueue.add(new dNode(edge.to,totalDistance,newPath));
                         }
                     }
                 }
             }
         }
+        return null;
 
     }
+
+    /*lägg (startnod, 0, tom väg) i en p-kö
+    while p-kön inte är tom
+        (nod, cost, path) = första elementet i p-kön
+        if nod ej är besökt
+            if nod är slutpunkt returnera path
+        else
+            markera nod besökt
+            for every v on EL(nod)
+        if v ej är besökt
+            lägg in nytt köelement
+                för v i p-kön*/
 
 
     class dNode implements Comparable<dNode>{
@@ -64,7 +81,7 @@ public class CompDijkstraPath <E extends Edge>{
         double totalCost; //the total cost of the path of this node
         List <E> path; //the path of the node
 
-        public dNode(int startNod, int totalCost, List <E> path){
+        public dNode(int startNod, double totalCost, List <E> path){
 
             this.startNod = startNod;
             this.totalCost = totalCost;
@@ -74,7 +91,13 @@ public class CompDijkstraPath <E extends Edge>{
 
         @Override
         public int compareTo(dNode o) {
-            return 0;
+
+            if(this.totalCost < o.totalCost){
+                return -1;
+            }else if(this.totalCost == o.totalCost){
+                return 0;
+            }
+            return 1;
         }
     }
 }
