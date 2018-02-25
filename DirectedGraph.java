@@ -3,12 +3,12 @@ import java.util.*;
 
 public class DirectedGraph<E extends Edge> {
 
-	List <E> [] edgeList; //en arraylist
+	private List <E> [] edgeList; //en arraylist
 
-	int numberOfNodes;
+	private int numberOfNodes;
 
 
-	public DirectedGraph(int numberOfNodes) {
+	private DirectedGraph(int numberOfNodes) {
 
 		edgeList = new List[numberOfNodes]; //en list-array som representerar varje nod i form av index
 		this.numberOfNodes = numberOfNodes;
@@ -31,8 +31,7 @@ public class DirectedGraph<E extends Edge> {
 	public Iterator<E> shortestPath(int startNode, int endNode){ //kant from och to, index i en array
 
 		CompDijkstraPath<E> comp = new CompDijkstraPath<>(startNode, endNode, 0, edgeList);
-
-
+		
 		return comp.shortestPath(startNode, endNode);
 	}
 		
@@ -45,7 +44,8 @@ public class DirectedGraph<E extends Edge> {
 		for(int i = 0; i < edgeList.length; i++){
 			edges.addAll(edgeList[i]);
 		}
-		while(edges != null && cc.length > 1){
+		while(!edges.isEmpty() && cc.length > 1){
+			System.out.println("Hej jag sitter fast");
 			E e = edges.poll();
 			if(cc[e.from] != cc[e.to]){
 				if(cc[e.from].size() > cc[e.to].size()){
@@ -71,13 +71,14 @@ public class DirectedGraph<E extends Edge> {
 		}
 
 
-
+		System.out.println("Hej jag sitter inte fast");
 		return cc[0].iterator();
 	}
 
+	/*
 	public void add(Element element){
 
-	}
+	}*/
 
 	private class CompKruskalEdge implements Comparator<E>{
 
@@ -91,9 +92,5 @@ public class DirectedGraph<E extends Edge> {
 			return 1;
 		}
 	}
-
-
-
-
 }
   
