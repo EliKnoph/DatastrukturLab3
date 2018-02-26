@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.PriorityQueue;
 
 /**
- * A class constisting of computing the shortest path between two nodes according to Dijkstra's Algorithm.
+ * A class consisting of computing the shortest path between two nodes according to Dijkstra's Algorithm.
  *
  * @author Eli Knoph & Linnéa Bark
  * */
