@@ -4,6 +4,12 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.PriorityQueue;
 
+/**
+ * A class constisting of computing the shortest path between two nodes according to Dijkstra's Algorithm.
+ *
+ * @author Eli Knoph & Linnéa Bark
+ * */
+
 public class CompDijkstraPath <E extends Edge>{
 
     int from;

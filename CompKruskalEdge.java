@@ -1,5 +1,11 @@
 import java.util.*;
 
+/**
+ * A class constisting of computing the minimum spanning tree according to Kruskal's algorithm.
+ *
+ * @author Eli Knoph & Linnéa Bark
+ * */
+
 public class CompKruskalEdge <E extends Edge> implements Comparator<E>{
 
     private List <E> [] edgeList; //en arraylist

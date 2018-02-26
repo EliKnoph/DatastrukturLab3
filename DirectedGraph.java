@@ -1,9 +1,15 @@
-import java.util.PriorityQueue;
+
 import java.util.*;
+
+/**
+ * A class containing the objects of computation adn redirection of shortest path and minimum spanning tree.
+ * The nodes are represented as indexes in an array, and every index is a list object.
+ * @author Eli Knoph & Linnéa Bark
+ * */
 
 public class DirectedGraph<E extends Edge> {
 
-	private List <E> [] edgeList; //en arraylist
+	private List <E> [] edgeList; //list array
 
 	private int numberOfNodes;
 
