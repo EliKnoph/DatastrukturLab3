@@ -16,7 +16,6 @@ public class CompKruskalEdge <E extends Edge> implements Comparator<E>{
 
         this.edgeList = edgeList;
         this.numberOfNodes = numberOfNodes;
-
     }
 
     public Iterator<E> minimumSpanningTree() {
@@ -28,23 +27,9 @@ public class CompKruskalEdge <E extends Edge> implements Comparator<E>{
             cc[i] = new ArrayList<>();
         }
 
-
         for (List<E> anEdgeList : edgeList) {                //Lägger in alla bågar i pq
             edges.addAll(anEdgeList);
         }
-/*
-        while(!edges.isEmpty()){
-            E edge = edges.poll();
-
-            int from = edge.from;
-            int to = edge.to;
-
-            if(cc[from] != cc[to]){
-                merge(cc,from,to);
-
-                cc[from].add(edge);
-            }
-        }*/
 
         while(!edges.isEmpty() && cc.length > 1){				//Så länge pq inte är tom och och cc > 1
             E e = edges.poll();									//Hämtar e från kön
@@ -69,31 +54,10 @@ public class CompKruskalEdge <E extends Edge> implements Comparator<E>{
                     cc[e.from] = cc[e.to];
                 }
                 cc[e.from].add(e);
-
             }
         }
-
         return cc[0].iterator();
     }
-/*
-    private void merge (List<E> [] cc, int from, int to){
-        if(cc[from].size() < cc[to].size()){
-            for(E edge : cc[from]){
-                cc[to].add(edge);
-                cc[edge.from] = cc[to];
-                cc[edge.to] = cc[to];
-            }
-            cc[from] = cc[to];
-        }else{
-            for(E edge : cc[to]){
-                cc[from].add(edge);
-                cc[edge.from] = cc[from];
-                cc[edge.to] = cc[from];
-            }
-            cc[to] = cc[from];
-        }
-
-    }*/
 
     @Override
     public int compare(E o1, E o2) {
