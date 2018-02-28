@@ -61,11 +61,6 @@ public class CompKruskalEdge <E extends Edge> implements Comparator<E>{
         return cc[0].iterator();
     }
 
-    private boolean shortestList(){
-
-        return true;
-    }
-
     @Override
     public int compare(E o1, E o2) {
         if(o1.getWeight() < o2.getWeight()){
