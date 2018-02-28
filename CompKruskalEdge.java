@@ -32,31 +32,38 @@ public class CompKruskalEdge <E extends Edge> implements Comparator<E>{
         }
 
         while(!edges.isEmpty() && cc.length > 1){				//Så länge pq inte är tom och och cc > 1
-            E e = edges.poll();									//Hämtar e från kön
-            if(cc[e.from] != cc[e.to]){							//Om from och  to inte är samma lista
-                if(cc[e.from].size() > cc[e.to].size()){		//Flyttar alla element från kortare listan till den längre
-                    for(E edge : cc[e.to]){
-                        //E currentEdge = cc[e.to].get(i); 		//byt namn
-                        cc[e.from].add(edge);
-                        cc[edge.from] = cc[e.from];
-                        cc[edge.to] = cc[e.from];
+            E e = edges.poll();                                 //Hämtar e från kön
+
+            int from = e.from;
+            int to = e.to;
+
+            if(cc[from] != cc[e.to]){							//Om from och  to inte är samma lista
+                if(cc[from].size() > cc[to].size()){		//Flyttar alla element från kortare listan till den längre
+                    for(E edge : cc[to]){
+                        cc[from].add(edge);
+                        cc[edge.from] = cc[from];
+                        cc[edge.to] = cc[from];
 
                     }
-                    cc[e.to] = cc[e.from];						//Lägger e i den påfyllda listan
+                    cc[to] = cc[from];
                 }
                 else{
-                    for(E edge : cc[e.from]){
-                       // E currentEdge = cc[e.from].get(i);
-                        cc[e.to].add(edge);				//Va from här innan, funkar likadant, fett weird
-                        cc[edge.from] = cc[e.to];
-                        cc[edge.to] = cc[e.to];
+                    for(E edge : cc[from]){
+                        cc[to].add(edge);
+                        cc[edge.from] = cc[to];
+                        cc[edge.to] = cc[to];
                     }
-                    cc[e.from] = cc[e.to];
+                    cc[from] = cc[to];
                 }
-                cc[e.from].add(e);
+                cc[from].add(e);                          //Lägger e i den påfyllda listan
             }
         }
         return cc[0].iterator();
+    }
+
+    private boolean shortestList(){
+
+        return true;
     }
 
     @Override
