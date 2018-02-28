@@ -21,9 +21,8 @@ public class CompKruskalEdge <E extends Edge> implements Comparator<E>{
 
     public Iterator<E> minimumSpanningTree() {
 
-        System.out.println("Skrivs jag ut?");
-        List<E>[] cc = new List[numberOfNodes];   			//Skapar fältet cc
-        PriorityQueue<E> edges = new PriorityQueue<>(numberOfNodes,new CompKruskalEdge(edgeList,numberOfNodes));		//Skapar en pq
+        List<E>[] cc = new List [numberOfNodes];   			//Skapar fältet cc
+        PriorityQueue<E> edges = new PriorityQueue<E>(numberOfNodes,new CompKruskalEdge <E> (edgeList,numberOfNodes));		//Skapar en pq
 
         for(int i = 0; i < numberOfNodes; i++){						//Lägger in en tom lista på varje nod i cc
             cc[i] = new ArrayList<>();
@@ -69,10 +68,10 @@ public class CompKruskalEdge <E extends Edge> implements Comparator<E>{
                     }
                     cc[e.from] = cc[e.to];
                 }
-            }
-            cc[e.from].add(e);
-        }
+                cc[e.from].add(e);
 
+            }
+        }
 
         return cc[0].iterator();
     }
