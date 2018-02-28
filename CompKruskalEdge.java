@@ -20,42 +20,81 @@ public class CompKruskalEdge <E extends Edge> implements Comparator<E>{
     }
 
     public Iterator<E> minimumSpanningTree() {
+
+        System.out.println("Skrivs jag ut?");
         List<E>[] cc = new List[numberOfNodes];   			//Skapar fältet cc
-        PriorityQueue<E> edges = new PriorityQueue<>(100,new CompKruskalEdge(edgeList,numberOfNodes));		//Skapar en pq
-        for(int i = 0; i < cc.length; i++){						//Lägger in en tom lista på varje nod i cc
+        PriorityQueue<E> edges = new PriorityQueue<>(numberOfNodes,new CompKruskalEdge(edgeList,numberOfNodes));		//Skapar en pq
+
+        for(int i = 0; i < numberOfNodes; i++){						//Lägger in en tom lista på varje nod i cc
             cc[i] = new ArrayList<>();
         }
-        for(int i = 0; i < edgeList.length; i++){				//Lägger in alla bågar i pq
-            edges.addAll(edgeList[i]);
+
+
+        for (List<E> anEdgeList : edgeList) {                //Lägger in alla bågar i pq
+            edges.addAll(anEdgeList);
         }
+/*
+        while(!edges.isEmpty()){
+            E edge = edges.poll();
+
+            int from = edge.from;
+            int to = edge.to;
+
+            if(cc[from] != cc[to]){
+                merge(cc,from,to);
+
+                cc[from].add(edge);
+            }
+        }*/
+
         while(!edges.isEmpty() && cc.length > 1){				//Så länge pq inte är tom och och cc > 1
             E e = edges.poll();									//Hämtar e från kön
             if(cc[e.from] != cc[e.to]){							//Om from och  to inte är samma lista
                 if(cc[e.from].size() > cc[e.to].size()){		//Flyttar alla element från kortare listan till den längre
-                    for(int i = 0; i < cc[e.to].size(); i++){
-                        E currentEdge = cc[e.to].get(i); 		//byt namn
-                        cc[e.from].add(currentEdge);
-                        cc[currentEdge.from] = cc[e.from];
-                        cc[currentEdge.to] = cc[e.to];
+                    for(E edge : cc[e.to]){
+                        //E currentEdge = cc[e.to].get(i); 		//byt namn
+                        cc[e.from].add(edge);
+                        cc[edge.from] = cc[e.from];
+                        cc[edge.to] = cc[e.from];
 
                     }
-                    cc[e.from] = cc[e.to];						//Lägger e i den påfyllda listan
+                    cc[e.to] = cc[e.from];						//Lägger e i den påfyllda listan
                 }
-                else if(cc[e.to].size() > cc[e.from].size()){
-                    for(int i = 0; i < cc[e.from].size(); i++){
-                        E currentEdge = cc[e.from].get(i);
-                        cc[e.to].add(currentEdge);				//Va from här innan, funkar likadant, fett weird
-                        cc[currentEdge.to] = cc[e.to];
-                        cc[currentEdge.from] = cc[e.from];
+                else{
+                    for(E edge : cc[e.from]){
+                       // E currentEdge = cc[e.from].get(i);
+                        cc[e.to].add(edge);				//Va from här innan, funkar likadant, fett weird
+                        cc[edge.from] = cc[e.to];
+                        cc[edge.to] = cc[e.to];
                     }
-                    cc[e.to] = cc[e.from];
+                    cc[e.from] = cc[e.to];
                 }
             }
+            cc[e.from].add(e);
         }
 
 
         return cc[0].iterator();
     }
+/*
+    private void merge (List<E> [] cc, int from, int to){
+        if(cc[from].size() < cc[to].size()){
+            for(E edge : cc[from]){
+                cc[to].add(edge);
+                cc[edge.from] = cc[to];
+                cc[edge.to] = cc[to];
+            }
+            cc[from] = cc[to];
+        }else{
+            for(E edge : cc[to]){
+                cc[from].add(edge);
+                cc[edge.from] = cc[from];
+                cc[edge.to] = cc[from];
+            }
+            cc[to] = cc[from];
+        }
+
+    }*/
 
     @Override
     public int compare(E o1, E o2) {
