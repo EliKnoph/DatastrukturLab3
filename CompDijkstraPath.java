@@ -15,7 +15,6 @@ public class CompDijkstraPath <E extends Edge>{
     int from;
     int to;
     int cost;
-    boolean [] visitedNodes;
     List<E> [] edgeList;
 
 
@@ -30,20 +29,20 @@ public class CompDijkstraPath <E extends Edge>{
 
     public Iterator<E> shortestPath(int startNodeNumber, int endNodeNumber){ //kant from och to, index i en array
 
-        boolean [] visitedNodes; //samlar alla besökta noder
+        boolean [] visitedNodes;                            //samlar alla besökta noder
 
-        visitedNodes = new boolean[edgeList.length]; //sätter storleken på visitedNodes-arrayen, lika stor som antalet noder
+        visitedNodes = new boolean[edgeList.length];        //sätter storleken på visitedNodes-arrayen, lika stor som antalet noder
 
         PriorityQueue<dNode> priorityQueue = new PriorityQueue<>(); //definierar priokön som ska bestå av nodes
 
         dNode currentNode = new dNode(startNodeNumber, 0, new ArrayList<>());
-        priorityQueue.add(currentNode); //adderar noden du är på, kostnaden som är 0 och dess path
+        priorityQueue.add(currentNode);                         //adderar noden du är på, kostnaden som är 0 och dess path
 
         while(!priorityQueue.isEmpty()){
 
-            currentNode = priorityQueue.poll(); //sätter första noden
+            currentNode = priorityQueue.poll();                 //sätter första noden
 
-            if(!visitedNodes[currentNode.startNod]){ //om startnoden inte är besökt innan
+            if(!visitedNodes[currentNode.startNod]){            //om startnoden inte är besökt innan
 
 
 
@@ -70,9 +69,9 @@ public class CompDijkstraPath <E extends Edge>{
 
     class dNode implements Comparable<dNode>{
 
-        int startNod; //the index of the node
-        double totalCost; //the total cost of the path of this node
-        List <E> path; //the path of the node
+        int startNod;                       //the index of the node
+        double totalCost;                   //the total cost of the path of this node
+        List <E> path;                      //the path of the node
 
         public dNode(int startNod, double totalCost, List <E> path){
 

@@ -20,6 +20,7 @@ public class CompKruskalEdge <E extends Edge> implements Comparator<E>{
 
     public Iterator<E> minimumSpanningTree() {
 
+
         List<E>[] cc = new List [numberOfNodes];   			//Skapar fältet cc
         PriorityQueue<E> edges = new PriorityQueue<E>(numberOfNodes,new CompKruskalEdge <E> (edgeList,numberOfNodes));		//Skapar en pq
 
